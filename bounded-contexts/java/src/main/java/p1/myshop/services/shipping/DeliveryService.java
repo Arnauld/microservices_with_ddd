@@ -14,9 +14,7 @@ public class DeliveryService {
 
     public double calculateOrderWeight(Cart cart) {
         return cart.items().stream()
-                .map(CartItem::itemId)
-                .map(catalogService::loadItem)
-                .mapToDouble(HasWeight::weight)
+                .mapToDouble(cartItem -> cartItem.quantity.toInt() * catalogService.loadItem(cartItem.itemId).weight())
                 .sum();
     }
 }
